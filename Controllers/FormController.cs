@@ -28,7 +28,7 @@ public class FormController : Controller
             await _dbHelper.InsertFormFieldAsync(formId, field.Label, field.FieldType);
         }
 
-        return RedirectToAction("PreviewForm", new { formId });
+        return RedirectToAction("Index");
     }
 
     // Step 2: Preview Form
