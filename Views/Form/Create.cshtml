@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Create Form";
+}
+
+<h2>Create Form</h2>
+
+<form asp-action="Create" method="post" id="formBuilder">
+    <div class="mb-3">
+        <label>Form Title</label>
+        <input type="text" name="formTitle" class="form-control" required />
+    </div>
+
+    <h4>Fields</h4>
+    <table class="table" id="fieldsTable">
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Required</th>
+                <th>Selected Option</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" name="labels" class="form-control" required /></td>
+                <td><input type="checkbox" name="isRequired" /></td>
+                <td><input type="text" name="selectedOptions" class="form-control" /></td>
+                <td><button type="button" class="btn btn-danger btn-sm removeRow">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" id="addRow" class="btn btn-primary">Add More</button>
+    <button type="submit" class="btn btn-success">Save Form</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById("addRow").addEventListener("click", function () {
+            var table = document.getElementById("fieldsTable").getElementsByTagName("tbody")[0];
+            var newRow = table.rows[0].cloneNode(true);
+
+            // Clear values
+            newRow.querySelectorAll("input").forEach(function (input) {
+                if (input.type === "checkbox") input.checked = false;
+                else input.value = "";
+            });
+            table.appendChild(newRow);
+        });
+
+        document.addEventListener("click", function (e) {
+            if (e.target && e.target.classList.contains("removeRow")) {
+                var row = e.target.closest("tr");
+                var tbody = row.parentNode;
+                if (tbody.rows.length > 1) tbody.removeChild(row);
+            }
+        });
+    </script>
+}

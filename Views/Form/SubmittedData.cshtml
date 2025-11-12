@@ -1,0 +1,27 @@
+﻿@model System.Data.DataTable
+
+<div class="container mt-5">
+    <h2>Submitted Form Data</h2>
+
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Field Label</th>
+                <th>Field Type</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["Label"]</td>
+                    <td>@row["FieldType"]</td>
+                    <td>@row["UserValue"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.Action("Index", "Form")" class="btn btn-primary mt-3">Back to Form List</a>
+</div>

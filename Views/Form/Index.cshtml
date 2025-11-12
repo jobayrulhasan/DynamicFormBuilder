@@ -1,0 +1,44 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewData["Title"] = "Form List";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">🗂 Available Forms</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Form ID</th>
+                <th>Form Title</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        <td>@row["FormID"]</td>
+                        <td>@row["FormTitle"]</td>
+                        <td>@Convert.ToDateTime(row["CreatedDate"]).ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="@Url.Action("PreviewForm", "Form", new { formId = row["FormID"] })">Preview</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No forms found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.Action("CreateForm", "Form")" class="btn btn-success mt-3">➕ Create New Form</a>
+</div>

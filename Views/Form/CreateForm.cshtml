@@ -1,0 +1,121 @@
+﻿@*@model FormModel
+
+@{
+    ViewData["Title"] = "Create Form";
+}
+
+<h2>Create Form</h2>
+
+<form method="post" asp-controller="Form" asp-action="SaveForm">
+    <label>Form Title:</label>
+    <input type="text" name="FormTitle" required />
+
+    <div id="fieldsContainer"></div>
+
+    <button type="button" id="addField">Add Field</button>
+    <button type="submit">Save Form</button>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let count = 0;
+        $('#addField').click(function () {
+            let html = `<div class="field mt-2">
+                        <label>Label:</label>
+                        <input type="text" name="Fields[${count}].Label" required />
+
+                        <label>Type:</label>
+                        <select name="Fields[${count}].FieldType">
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                        </select>
+                    </div>`;
+            $('#fieldsContainer').append(html);
+            count++;
+        });
+    </script>
+}
+*@
+
+
+
+@model FormModel
+
+@{
+    ViewData["Title"] = "Create Form";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-3">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Create Dynamic Form</h4>
+        </div>
+
+        <div class="card-body">
+            <form method="post" asp-controller="Form" asp-action="SaveForm">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Form Title:</label>
+                    <input type="text" name="FormTitle" class="form-control" placeholder="Enter form title" required />
+                </div>
+
+                <div id="fieldsContainer"></div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="button" id="addField" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle"></i> Add Field
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Save Form
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Bootstrap & jQuery -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        let count = 0;
+
+        // Add Field
+        $('#addField').click(function () {
+            let html = `
+                        <div class="border rounded p-3 mb-3 bg-light field-item" id="field-${count}">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-5">
+                                    <label class="form-label fw-semibold">Label:</label>
+                                    <input type="text" name="Fields[${count}].Label" class="form-control" placeholder="Enter field label" required />
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="form-label fw-semibold">Type:</label>
+                                    <select name="Fields[${count}].FieldType" class="form-select">
+                                        <option value="text">Text</option>
+                                        <option value="number">Number</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger w-100 removeField">
+                                        <i class="bi bi-trash"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+            $('#fieldsContainer').append(html);
+            count++;
+        });
+
+        // Remove Field
+        $(document).on('click', '.removeField', function () {
+            $(this).closest('.field-item').remove();
+        });
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "Preview Form";
+}
+
+<h2>Preview Form</h2>
+
+@if (Model != null && Model.Rows.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Label</th>
+                <th>Required</th>
+                <th>Selected Option</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    <td>@row["Label"]</td>
+                    <td>@(Convert.ToBoolean(row["IsRequired"]) ? "Yes" : "No")</td>
+                    <td>@row["SelectedOption"]</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No fields found for this form.</p>
+}
+
+<a asp-action="Index" class="btn btn-secondary">Back</a>
